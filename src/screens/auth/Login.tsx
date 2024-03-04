@@ -40,7 +40,7 @@ const Login = (props) => {
           size={60}
           name="fitness-center"
         />
-        <Text style={style.title}>SoundScape</Text>
+        <Text style={style.title}>FitSpot</Text>
       </View>
 
       <View style={style.form_container}>

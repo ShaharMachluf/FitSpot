@@ -4,26 +4,30 @@ import colors from './colors'
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.dark_tin,
+        backgroundColor: colors.light_tin,
+        // alignItems: 'center',
+        justifyContent: 'center'
       },
       logo_container: {
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center",
+        // alignItems: "center",
       },
       title: {
-        color: colors.white,
+        color: '#000',
         marginLeft: -14,
-        fontSize: 40,
+        fontSize: 50,
         fontFamily: "RobotoCondensed-Bold",
       },
       form_container: {
         width: "100%",
         marginTop: 30,
+        paddingHorizontal: 20
       },
       outline_btn:{
         width:'100%',
         borderColor:colors.dark_orange,
+        // backgroundColor: colors.white,
         borderWidth:1,
         fontSize: 18,
         alignItems: "center",
