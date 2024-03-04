@@ -32,7 +32,6 @@ const Login = (props) => {
 }
 
   return (
-    // <Text>Login</Text>
     <View style={style.container}>
       <View style={style.logo_container}>
         <MaterialIcons
