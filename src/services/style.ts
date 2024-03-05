@@ -62,4 +62,13 @@ export default StyleSheet.create({
         fontFamily: "Raleway-Medium",
         marginBottom:12
       },
+      checkBoxContainer:{
+        flexDirection: 'row',
+        alignItems: "center",
+        marginBottom: 10
+      },
+      checkBoxTxt:{
+        fontFamily: "Raleway-Medium",
+        fontSize: 18
+      }
 })
