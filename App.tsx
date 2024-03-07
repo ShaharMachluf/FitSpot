@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useFonts } from "expo-font";
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -10,8 +9,10 @@ import {
 } from "react-native-paper";
 import colors from './src/services/colors';
 import { AuthStack } from './src/navigation/Navigation';
-import Login from './src/screens/auth/Login';
 import style from './src/services/style';
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { auth } from './src/services/firebase-config';
+import Dashboard from './src/screens/dashboard/Dashboard';
 
 
 const theme = {
@@ -23,6 +24,21 @@ const theme = {
 };
 
 export default function App() {
+
+  const [isUser, setIsUser] = useState(false);
+  const handleAuthStateChange = async (authUser: User | null) => {
+    if (authUser) {
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, handleAuthStateChange);
+    return unsubscribe;
+  }, []);
+
 
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("./assets/fonts/Raleway-Bold.ttf"),
@@ -46,18 +62,12 @@ export default function App() {
     <View style={style.container} onLayout={onLayoutRootView}>
     <NavigationContainer>
       <PaperProvider theme={theme}>
-        <AuthStack />
+        {
+          isUser ? (<Dashboard />) : (<AuthStack />)
+        }
       </PaperProvider>
     </NavigationContainer>
   </View>
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: colors.dark_tin,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
