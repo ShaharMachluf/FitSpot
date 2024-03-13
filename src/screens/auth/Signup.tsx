@@ -3,10 +3,13 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import style from '../../services/style'
 import LogoComponent from '../../components/LogoComponent';
 import SignupFormComponent from '../../components/SignupFormComponent';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/Navigation';
 
+type Props = NativeStackScreenProps<RootStackParamList, "signup">;
 
 //same form for both trainers and trainees but there will be a checkbox to mark if your'e a trainer
-const Signup: React.FC = (props) => {
+const Signup: React.FC<Props> = (props) => {
 
   return (
     <>
