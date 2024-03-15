@@ -5,13 +5,11 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.light_tin,
-        // alignItems: 'center',
         justifyContent: 'center'
       },
       logo_container: {
         flexDirection: "row",
         justifyContent: "center",
-        // alignItems: "center",
       },
       title: {
         color: '#000',
@@ -24,10 +22,16 @@ export default StyleSheet.create({
         marginTop: 30,
         paddingHorizontal: 20
       },
+      add_container:{
+        width:"90%",
+        padding: 25,
+        marginHorizontal: "5%",
+        backgroundColor: colors.light_tin,
+        borderRadius: 10
+      },
       outline_btn:{
         width:'100%',
         borderColor:colors.dark_orange,
-        // backgroundColor: colors.white,
         borderWidth:1,
         fontSize: 18,
         alignItems: "center",
@@ -60,7 +64,7 @@ export default StyleSheet.create({
         width: "100%",
         fontSize: 18,
         fontFamily: "Raleway-Medium",
-        marginBottom:12
+        marginBottom:12,
       },
       checkBoxContainer:{
         flexDirection: 'row',
@@ -70,5 +74,22 @@ export default StyleSheet.create({
       checkBoxTxt:{
         fontFamily: "Raleway-Medium",
         fontSize: 18
+      },
+      date_time_btn: {
+        backgroundColor: colors.dark_tin,
+        borderRadius: 12,
+        padding: 12,
+        fontSize: 18,
+        alignItems: "center",
+        marginBottom: 12
+      },
+      time_container: {
+        flexDirection: 'row',
+        alignItems: "center",
+        marginBottom: 10,
+        justifyContent: "space-between"
+      },
+      time_txt: {
+        fontSize: 12
       }
 })
