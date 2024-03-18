@@ -14,6 +14,7 @@ import colors from "../services/colors";
 import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import dayjs from "dayjs";
+import { Class } from "../stores/useClassStore";
 
 const AddClassForm = () => {
   const [name, setName] = useState<string>("");
@@ -49,7 +50,32 @@ const AddClassForm = () => {
     hide();
   };
 
-  const addAction = async (): Promise<void> => {};
+  const addAction = async (): Promise<void> => {
+    if(start && end){
+      const newClass: Class = {
+        name: name,
+        trainer: trainer,
+        date: date,
+        start: start.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        end: end.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        minParticipants: Number(minParticipants),
+        maxParticipants: Number(maxParticipants),
+        participants: [],
+        waitingList: []
+      } 
+      console.log(newClass);
+    }
+
+    
+  };
 
   return (
     <>

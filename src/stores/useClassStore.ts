@@ -1,10 +1,11 @@
+import { DateType } from "react-native-ui-datepicker";
 import { create } from "zustand";
 
 export interface Class{
-    id: string;
+    id?: string;
     name: string;
     trainer: string;
-    date: Date;
+    date: DateType;
     start: string;
     end: string;
     minParticipants: number;

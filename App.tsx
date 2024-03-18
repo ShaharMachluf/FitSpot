@@ -63,7 +63,7 @@ export default function App() {
     return null;
   }
 
-  const checkUsersType = async (): Promise<void> => {
+  const checkUsersType = async () => {
     try {
       const result = await fetchUser();
       setIsTrainer(result.isTrainer);
