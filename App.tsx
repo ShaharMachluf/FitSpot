@@ -16,6 +16,8 @@ import TraineesDashboard from "./src/screens/dashboard/Dashboard";
 import TrainersDashboard from "./src/screens/trainer/Dashboard";
 import { useUser } from "./src/stores/useUserStore";
 import { fetchUser } from "./src/services/userService";
+import { useClass } from "./src/stores/useClassStore";
+import { fetchAllClasses } from "./src/services/classService";
 
 const theme = {
   ...DefaultTheme,
@@ -28,9 +30,11 @@ const theme = {
 export default function App() {
   const currUser = useUser((state) => state.user);
   const setUser = useUser((state) => state.setUser);
+  const classes = useClass((state) => state.classes);
+  const setClasses = useClass((state) => state.setClasses)
   const [isTrainer, setIsTrainer] = useState<boolean | null | undefined>(null);
-
   const [isUser, setIsUser] = useState<boolean>(false);
+
   const handleAuthStateChange = async (authUser: User | null) => {
     if (authUser) {
       setIsUser(true);
@@ -44,6 +48,19 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(auth, handleAuthStateChange);
     return unsubscribe;
   }, []);
+
+  const fetchData = async() => {
+    const allClasses = await fetchAllClasses()
+    if (allClasses instanceof Error) {
+      console.error('Error fetching classes:', allClasses.message);
+    }else{
+      setClasses(allClasses)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("./assets/fonts/Raleway-Bold.ttf"),
@@ -63,7 +80,7 @@ export default function App() {
     return null;
   }
 
-  const checkUsersType = async (): Promise<void> => {
+  const checkUsersType = async () => {
     try {
       const result = await fetchUser();
       setIsTrainer(result.isTrainer);

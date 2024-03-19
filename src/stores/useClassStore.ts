@@ -16,6 +16,7 @@ export interface Class{
 
 interface classStore{
     classes: Class[];
+    setClasses: (cs: Class[]) => void;
     addClass: (c: Class) => void;
     updateClass: (updatedClass: Class) => void;
     removeClass: (id: string) => void;
@@ -23,6 +24,7 @@ interface classStore{
 
 export const useClass = create<classStore>((set) => ({
     classes: [],
+    setClasses: (classes) => set({classes}),
     addClass: (c) => set((state)=> ({classes:[...state.classes, c]})),
     updateClass: (updatedClass) => set((state) => ({classes: state.classes.map((c) => c.id === updatedClass.id ? updatedClass : c)})),
     removeClass: (id) => set((state)=> ({classes: state.classes.filter((c) => c.id !== id)})) 
