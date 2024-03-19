@@ -17,6 +17,12 @@ export default StyleSheet.create({
         fontSize: 50,
         fontFamily: "RobotoCondensed-Bold",
       },
+      add_title: {
+        color: '#000',
+        fontSize: 30,
+        marginBottom: 10,
+        fontFamily: "RobotoCondensed-Bold"
+      },
       form_container: {
         width: "100%",
         marginTop: 30,

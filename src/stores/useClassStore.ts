@@ -2,10 +2,10 @@ import { DateType } from "react-native-ui-datepicker";
 import { create } from "zustand";
 
 export interface Class{
-    id?: string;
+    id: string;
     name: string;
     trainer: string;
-    date: DateType;
+    date: string;
     start: string;
     end: string;
     minParticipants: number;
@@ -21,7 +21,7 @@ interface classStore{
     removeClass: (id: string) => void;
 }
 
-export const useUser = create<classStore>((set) => ({
+export const useClass = create<classStore>((set) => ({
     classes: [],
     addClass: (c) => set((state)=> ({classes:[...state.classes, c]})),
     updateClass: (updatedClass) => set((state) => ({classes: state.classes.map((c) => c.id === updatedClass.id ? updatedClass : c)})),

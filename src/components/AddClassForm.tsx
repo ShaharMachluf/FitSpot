@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   TextInput,
   TouchableOpacity,
   Text,
   View,
-  TouchableWithoutFeedback,
-  Platform,
-  SafeAreaView,
+  Alert,
 } from "react-native";
 import style from "../services/style";
 import colors from "../services/colors";
 import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import dayjs from "dayjs";
-import { Class } from "../stores/useClassStore";
+import { Class, useClass } from "../stores/useClassStore";
+import { addClass } from "../services/classService";
 
 const AddClassForm = () => {
   const [name, setName] = useState<string>("");
@@ -28,6 +27,9 @@ const AddClassForm = () => {
   const [datePicker, setDatePicker] = useState<boolean>(false);
   const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
   const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
+
+  const addClassToStore = useClass((state)=>state.addClass)
+  const classes = useClass((state)=>state.classes)
 
   const showStartTimePicker = () => {
     setStartTimePickerVisibility(true);
@@ -50,12 +52,39 @@ const AddClassForm = () => {
     hide();
   };
 
+  const handleAddClass = async(c: Omit<Class, "id">): Promise<void> => {
+    try{
+      const id = await addClass(c)
+      addClassToStore({...c, id})    
+      setIsLoading(false)
+    }catch(error){
+      console.error('Error adding class:', error);
+      setIsLoading(false)
+    }
+  }
+
   const addAction = async (): Promise<void> => {
-    if(start && end){
-      const newClass: Class = {
+    setIsLoading(true)
+    //validation
+    if(name === "" || trainer === "" || !date || !start || !end || minParticipants === "" || maxParticipants === ""){
+      Alert.alert("Error", "All the fields must be filled")
+      setIsLoading(false)
+      return 
+    }
+    if(start > end){
+      Alert.alert("Error", "Start time must be earlier than end time")
+      setIsLoading(false)
+      return
+    }
+    if(Number(minParticipants) >= Number(maxParticipants)){
+      Alert.alert("Error", "Maximum number of participants must be larger than the minimum")
+      setIsLoading(false)
+      return
+    }
+      const newClass: Omit<Class, "id"> = {
         name: name,
         trainer: trainer,
-        date: date,
+        date: dayjs(date).format("DD/MM/YYYY"),
         start: start.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -71,10 +100,8 @@ const AddClassForm = () => {
         participants: [],
         waitingList: []
       } 
-      console.log(newClass);
-    }
+      await handleAddClass(newClass)
 
-    
   };
 
   return (
@@ -92,6 +119,7 @@ const AddClassForm = () => {
         </>
       ) : (
         <>
+          <Text style={style.add_title}>Add Class</Text>
           <TextInput
             value={name}
             onChangeText={(text) => setName(text)}

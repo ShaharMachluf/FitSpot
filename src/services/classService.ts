@@ -27,7 +27,7 @@ export const fetchAllClasses = async(): Promise<Class[] | Error> => {
     }
 }
 
-export const addClass = async(c: Class): Promise<string> => {
+export const addClass = async(c: Omit<Class, "id">): Promise<string> => {
     try{
         const docRef = await addDoc(classRef, c)
         return docRef.id
