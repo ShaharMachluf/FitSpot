@@ -15,7 +15,14 @@ import dayjs from "dayjs";
 import { Class, useClass } from "../stores/useClassStore";
 import { addClass } from "../services/classService";
 
-const AddClassForm = () => {
+
+
+interface AddClassFormProps {
+  hideModal: () => void;
+}
+
+
+const AddClassForm: React.FC<AddClassFormProps> = ({ hideModal }) => {
   const [name, setName] = useState<string>("");
   const [trainer, setTrainer] = useState<string>("");
   const [date, setDate] = useState<DateType>(dayjs());
@@ -57,6 +64,7 @@ const AddClassForm = () => {
       const id = await addClass(c)
       addClassToStore({...c, id})    
       setIsLoading(false)
+      hideModal()
     }catch(error){
       console.error('Error adding class:', error);
       setIsLoading(false)

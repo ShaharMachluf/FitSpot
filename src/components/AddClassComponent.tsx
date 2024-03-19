@@ -18,10 +18,10 @@ const MyComponent = () => {
           onDismiss={hideModal}
           contentContainerStyle={style.add_container}
         >
-            <AddClassForm/>
+            <AddClassForm hideModal={hideModal}/>
         </Modal>
       </Portal>
-      <Button style={{ marginTop: 30 }} onPress={showModal}>
+      <Button style={{ marginTop: 30 }} onPress={showModal} >
         Show
       </Button>
     </>
