@@ -18,7 +18,6 @@ const LoginFormComponent = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then(res => {
           setIsLoading(false)
-            console.log(res);
         })
         .catch(err => {
             Alert.alert(err.message)

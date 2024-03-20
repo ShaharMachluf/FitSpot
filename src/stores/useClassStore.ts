@@ -27,5 +27,5 @@ export const useClass = create<classStore>((set) => ({
     setClasses: (classes) => set({classes}),
     addClass: (c) => set((state)=> ({classes:[...state.classes, c]})),
     updateClass: (updatedClass) => set((state) => ({classes: state.classes.map((c) => c.id === updatedClass.id ? updatedClass : c)})),
-    removeClass: (id) => set((state)=> ({classes: state.classes.filter((c) => c.id !== id)})) 
+    removeClass: (id) => set((state)=> ({classes: state.classes.filter((c) => c.id !== id)})), 
 }))

@@ -8,7 +8,7 @@ import {
   Provider as PaperProvider,
 } from "react-native-paper";
 import colors from "./src/services/colors";
-import { AuthStack } from "./src/navigation/Navigation";
+import { AuthStack, TrainersDahcboardStack } from "./src/navigation/Navigation";
 import style from "./src/services/style";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./src/services/firebase-config";
@@ -34,6 +34,17 @@ export default function App() {
   const setClasses = useClass((state) => state.setClasses)
   const [isTrainer, setIsTrainer] = useState<boolean | null | undefined>(null);
   const [isUser, setIsUser] = useState<boolean>(false);
+
+  const checkUsersType = async (): Promise<void> => {
+    try {
+      const result = await fetchUser();
+      setIsTrainer(result.isTrainer);
+      setUser(result);
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Failed to fetch results");
+    }
+  };
 
   const handleAuthStateChange = async (authUser: User | null) => {
     if (authUser) {
@@ -80,17 +91,6 @@ export default function App() {
     return null;
   }
 
-  const checkUsersType = async () => {
-    try {
-      const result = await fetchUser();
-      setIsTrainer(result.isTrainer);
-      setUser(result);
-    } catch (error) {
-      console.log(error);
-      Alert.alert("Error", "Failed to fetch results");
-    }
-  };
-
   return (
     <View style={style.container} onLayout={onLayoutRootView}>
       <NavigationContainer>
@@ -99,12 +99,15 @@ export default function App() {
             <>
               {isTrainer !== null ? (
                 isTrainer ? (
-                  <TrainersDashboard />
+                  <TrainersDahcboardStack />
                 ) : (
                   <TraineesDashboard />
                 )
               ) : (
-                <ActivityIndicator />
+                <View style={style.container}>
+                  <ActivityIndicator size="large" color={colors.dark_tin}/>
+                </View>
+
               )}
             </>
           ) : (

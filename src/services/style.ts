@@ -5,7 +5,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.light_tin,
-        justifyContent: 'center'
+        justifyContent: 'center',
       },
       logo_container: {
         flexDirection: "row",

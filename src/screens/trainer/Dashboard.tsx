@@ -1,22 +1,39 @@
 import React from 'react'
-import { Button, Text } from 'react-native'
+import { Button, Text, View } from 'react-native'
 import { auth } from '../../services/firebase-config'
 import AddClassComponent from '../../components/AddClassComponent'
+import style from '../../services/style'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import colors from '../../services/colors'
+import ScheduleComponent from '../../components/ScheduleComponent'
+
+const handleSignOut = async() => {
+  await auth.signOut()
+}
 
 const Dashboard = () => {
 
-    const handleSignOut = async() => {
-        await auth.signOut()
-    }
-
   return (
     <>
-        <Text>Trainer's dashboard</Text>
-        <Button title='log out' onPress={handleSignOut}></Button>
+    <View style={style.container}>
+      <ScheduleComponent />
         <AddClassComponent />
+    </View>
     </>
 
   )
+}
+
+export const screenOptions = () => {
+  return {
+      headerTitle: 'Dashboard',
+      headerRight: () => (
+          <MaterialIcons 
+              onPress={handleSignOut}
+              name='logout' 
+              color={colors.white} size={24} />
+      )
+  }
 }
 
 export default Dashboard
