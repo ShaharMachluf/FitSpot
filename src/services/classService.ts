@@ -19,7 +19,10 @@ export const fetchAllClasses = async(): Promise<Class[] | Error> => {
     try{
         const docsSnap = await getDocs(classRef)
         const classList = docsSnap.docs.map((doc) => {
-            return doc.data() as Class
+            return {
+                id: doc.id,
+                ...doc.data(),
+            } as Class
         })
         return classList
     }catch(error){

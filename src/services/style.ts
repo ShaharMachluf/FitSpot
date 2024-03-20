@@ -97,5 +97,18 @@ export default StyleSheet.create({
       },
       time_txt: {
         fontSize: 12
+      },
+      class_item: {
+        alignItems: 'center',
+        backgroundColor: colors.light_orange,
+        borderRadius: 10,
+        marginBottom: 10,
+        marginHorizontal: 10,
+        padding: 5,
+        shadowColor: '#171717',
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 5
       }
 })

@@ -13,11 +13,16 @@ import moment from 'moment';
 import Swiper from 'react-native-swiper';
 import styles from '../services/calenderStyle'
 import { Class, useClass } from '../stores/useClassStore';
+import ClassItem from './ClassItem';
 
 const ScheduleComponent = () => {
   const classes = useClass((state) => state.classes);
   const getClassesByDate = (day: string):Class[] => {
-    return classes.filter((c) => c.date === day);
+    return classes.filter((c) => c.date === day).sort((a, b) => {
+      const dateA = new Date(`1970-01-01T${a.start}`);
+      const dateB = new Date(`1970-01-01T${b.start}`);
+      return dateA.getTime() - dateB.getTime();
+  });
   }
 
   const formatDate = ():string => {
@@ -119,7 +124,7 @@ const ScheduleComponent = () => {
             <View style={styles.placeholderInset}>
                 <FlatList
                   data={getClassesByDate(formatDate())}
-                  renderItem={({item}) => <Text>{item.name}</Text> }
+                  renderItem={({item}) => <ClassItem c={item}/> }
                   keyExtractor={item => item.id}
                 />
             </View>
