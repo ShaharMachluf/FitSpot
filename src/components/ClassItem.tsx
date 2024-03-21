@@ -13,13 +13,14 @@ interface Props{
 const ClassItem = ({c}: Props) => {
   return (
     <View style={style.class_item}>
-        <Text>{c.start} - {c.end}</Text>
-        <Text>{c.name}</Text>
-        <Text>{c.trainer}</Text>
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between', width:"75%"}}>
-            <Text>{c.participants.length}    </Text>
-            <ProgressBar progress={c.participants.length === 0 ? 0 : c.participants.length / c.maxParticipants} color={colors.dark_tin} />
-            <Text>    {c.maxParticipants}</Text>
+        <Text style={style.hours}>{c.start} - {c.end}</Text>
+        <Text style={style.name}>{c.name}</Text>
+        <Text style={style.trainer}>{c.trainer}</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Octicons name='people' size={15}/>
+            <Text style={style.participants}>  {c.participants.length}/{c.maxParticipants}</Text>
+            {/* <ProgressBar progress={c.participants.length === 0 ? 0 : c.participants.length / c.maxParticipants} color={colors.dark_tin} /> */}
+            {/* <Text> </Text> */}
         </View>
     </View>
   )

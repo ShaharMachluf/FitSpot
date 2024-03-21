@@ -99,16 +99,35 @@ export default StyleSheet.create({
         fontSize: 12
       },
       class_item: {
-        alignItems: 'center',
-        backgroundColor: colors.light_orange,
+        backgroundColor: colors.white,
         borderRadius: 10,
         marginBottom: 10,
         marginHorizontal: 10,
-        padding: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         shadowColor: '#171717',
         shadowOffset: {width: -2, height: 4},
         shadowOpacity: 0.2,
         shadowRadius: 3,
         elevation: 5
+      },
+      hours: {
+        color: "#bcbcbc",
+        fontFamily: "Raleway-Medium",
+        fontSize: 15
+      },
+      name: {
+        color: colors.dark_orange,
+        fontFamily: "Raleway-Bold",
+        fontSize: 20
+      },
+      trainer: {
+        color: colors.light_orange,
+        fontFamily: "Raleway-Medium",
+        fontSize: 17
+      },
+      participants: {
+        fontFamily: "Raleway-Medium",
+        fontSize: 15
       }
 })
