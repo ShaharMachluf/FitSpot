@@ -1,4 +1,4 @@
-import React, { useState, useRef, LegacyRef } from 'react';
+import React, { useState, useRef, LegacyRef, useEffect } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -17,15 +17,16 @@ import ClassItem from './ClassItem';
 
 const ScheduleComponent = () => {
   const classes = useClass((state) => state.classes);
-  const getClassesByDate = (day: string):Class[] => {
+  
+  const getClassesByDate = (day: string): Class[] => {
     return classes.filter((c) => c.date === day).sort((a, b) => {
       const dateA = new Date(`1970-01-01T${a.start}`);
       const dateB = new Date(`1970-01-01T${b.start}`);
       return dateA.getTime() - dateB.getTime();
-  });
+    });
   }
 
-  const formatDate = ():string => {
+  const formatDate = (): string => {
     const day = value.getDate();
     const month = value.getMonth() + 1; // Months are zero-indexed
     const year = value.getFullYear();
@@ -36,7 +37,7 @@ const ScheduleComponent = () => {
     return `${formattedDay}/${formattedMonth}/${year}`;
   }
 
-  const swiper = useRef();
+  const swiper = useRef<any>(null);
   const [value, setValue] = useState(new Date());
   const [week, setWeek] = useState(0);
 
@@ -55,6 +56,38 @@ const ScheduleComponent = () => {
     });
   }, [week]);
 
+  useEffect(() => {
+    const handleIndexChange = (ind: number) => {
+      if (ind === 1) {
+        return;
+      }
+      const newIndex = ind - 1;
+      const newWeek = week + newIndex;
+      const newValue = moment(value).add(newIndex, 'week').toDate();
+
+      // Scroll the swiper first
+      if (swiper.current) {
+        swiper.current.scrollTo(1, false);
+      }
+
+      // Then update the state after a small delay
+      setTimeout(() => {
+        setWeek(newWeek);
+        setValue(newValue);
+      }, 10); // Adjust the delay as needed
+    };
+
+    if (swiper.current) {
+      swiper.current.onIndexChanged = handleIndexChange;
+    }
+
+    return () => {
+      if (swiper.current) {
+        swiper.current.onIndexChanged = null;
+      }
+    };
+  }, [value, week]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -64,19 +97,7 @@ const ScheduleComponent = () => {
             index={1}
             ref={swiper}
             loop={false}
-            showsPagination={false}
-            onIndexChanged={ind => {
-              if (ind === 1) {
-                return;
-              }
-              setTimeout(() => {
-                const newIndex = ind - 1;
-                const newWeek = week + newIndex;
-                setWeek(newWeek);
-                setValue(moment(value).add(newIndex, 'week').toDate());
-                swiper.current.scrollTo(1, false);
-              }, 100);
-            }}>
+            showsPagination={false}>
             {weeks.map((dates, index) => (
               <View
                 style={[styles.itemRow, { paddingHorizontal: 16 }]}
@@ -122,11 +143,11 @@ const ScheduleComponent = () => {
         <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24 }}>
           <View style={styles.placeholder}>
             <View style={styles.placeholderInset}>
-                <FlatList
-                  data={getClassesByDate(formatDate())}
-                  renderItem={({item}) => <ClassItem c={item}/> }
-                  keyExtractor={item => item.id}
-                />
+              <FlatList
+                data={getClassesByDate(formatDate())}
+                renderItem={({ item }) => <ClassItem c={item} />}
+                keyExtractor={item => item.id}
+              />
             </View>
           </View>
         </View>
@@ -135,4 +156,4 @@ const ScheduleComponent = () => {
   );
 }
 
-export default ScheduleComponent
+export default ScheduleComponent;
