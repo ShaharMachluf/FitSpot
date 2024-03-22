@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Modal, Portal, Text, Button } from "react-native-paper";
+import { Modal, Portal, Button } from "react-native-paper";
 import AddClassForm from "./AddClassForm";
-import { View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import style from "../services/style";
 
 const MyComponent = () => {
@@ -18,12 +18,15 @@ const MyComponent = () => {
           onDismiss={hideModal}
           contentContainerStyle={style.add_container}
         >
-            <AddClassForm hideModal={hideModal}/>
+          <AddClassForm hideModal={hideModal} />
         </Modal>
       </Portal>
-      <Button style={{ marginTop: 30 }} onPress={showModal} >
-        Show
-      </Button>
+        <TouchableOpacity
+          style={[style.btn, style.add_class_btn]}
+          onPress={showModal}
+        >
+          <Text style={style.btn_txt}>Add Class</Text>
+        </TouchableOpacity>
     </>
   );
 };

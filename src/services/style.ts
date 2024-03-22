@@ -63,6 +63,9 @@ export default StyleSheet.create({
         fontSize: 18,
         alignItems: "center",
       },
+      add_class_btn: {
+        borderRadius:0
+      },
       input: {
         backgroundColor: colors.white,
         borderRadius: 12,
@@ -129,5 +132,15 @@ export default StyleSheet.create({
       participants: {
         fontFamily: "Raleway-Medium",
         fontSize: 15
+      },
+      class_item_btn_container: {
+        alignItems: 'center',
+        width: '100%',
+        marginVertical: 5
+
+      },
+      update_txt: {
+        color: colors.dark_tin,
+        fontSize: 17
       }
 })

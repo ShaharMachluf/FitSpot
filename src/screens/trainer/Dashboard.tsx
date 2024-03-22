@@ -16,7 +16,7 @@ const Dashboard = () => {
   return (
     <>
     <View style={style.container}>
-      <ScheduleComponent />
+      <ScheduleComponent mode='trainer'/>
         <AddClassComponent />
     </View>
     </>

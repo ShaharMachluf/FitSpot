@@ -15,7 +15,11 @@ import styles from '../services/calenderStyle'
 import { Class, useClass } from '../stores/useClassStore';
 import ClassItem from './ClassItem';
 
-const ScheduleComponent = () => {
+interface Props{
+  mode: string;
+}
+
+const ScheduleComponent = ({mode}: Props) => {
   const classes = useClass((state) => state.classes);
   
   const getClassesByDate = (day: string): Class[] => {
@@ -145,7 +149,12 @@ const ScheduleComponent = () => {
             <View style={styles.placeholderInset}>
               <FlatList
                 data={getClassesByDate(formatDate())}
-                renderItem={({ item }) => <ClassItem c={item} />}
+                renderItem={({ item }) => <ClassItem c={item} mode={mode}/>}
+                ListEmptyComponent={
+                <View style={{alignItems: 'center'}}>
+                  <Text>There are no classes on this day</Text>
+                </View>
+              }
                 keyExtractor={item => item.id}
               />
             </View>
