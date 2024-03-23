@@ -18,6 +18,7 @@ import { useUser } from "./src/stores/useUserStore";
 import { fetchUser } from "./src/services/userService";
 import { useClass } from "./src/stores/useClassStore";
 import { fetchAllClasses } from "./src/services/classService";
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const theme = {
   ...DefaultTheme,
@@ -27,6 +28,8 @@ const theme = {
   },
 };
 
+const queryClient = new QueryClient();
+
 export default function App() {
   const currUser = useUser((state) => state.user);
   const setUser = useUser((state) => state.setUser);
@@ -34,6 +37,7 @@ export default function App() {
   const setClasses = useClass((state) => state.setClasses)
   const [isTrainer, setIsTrainer] = useState<boolean | null | undefined>(null);
   const [isUser, setIsUser] = useState<boolean>(false);
+  
 
   const checkUsersType = async (): Promise<void> => {
     try {
@@ -92,6 +96,7 @@ export default function App() {
   }
 
   return (
+    <QueryClientProvider client={queryClient}>
     <View style={style.container} onLayout={onLayoutRootView}>
       <NavigationContainer>
         <PaperProvider theme={theme}>
@@ -116,5 +121,6 @@ export default function App() {
         </PaperProvider>
       </NavigationContainer>
     </View>
+    </QueryClientProvider>
   );
 }
