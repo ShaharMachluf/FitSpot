@@ -40,10 +40,10 @@ export const addClass = async(c: Omit<Class, "id">): Promise<string> => {
     }
 }
 
-export const updateClass = async(c: Class): Promise<string> => {
+export const updateClass = async(c: Class): Promise<Class | string> => {
     try{
         await setDoc(doc(database, 'classes', c.id), c)
-        return c.id
+        return c
     }catch (error){
         const er = error as Error
         return er.message

@@ -6,6 +6,7 @@ import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useMutation } from "react-query";
 import { removeClass } from "../services/classService";
+import UpdateClassComponent from "./UpdateClassComponent";
 
 interface Props {
   c: Class;
@@ -60,9 +61,7 @@ const ClassItem = ({ c, mode }: Props) => {
         </Text>
       </View>
       {mode === "trainer" ? (
-        <TouchableOpacity style={style.class_item_btn_container}>
-          <Text style={style.update_txt}>Update</Text>
-        </TouchableOpacity>
+        <UpdateClassComponent c={c} />
       ) : (
         <></>
       )}
