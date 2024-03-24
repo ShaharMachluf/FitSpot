@@ -142,5 +142,5 @@ export default StyleSheet.create({
       update_txt: {
         color: colors.dark_tin,
         fontSize: 17
-      }
+      },
 })

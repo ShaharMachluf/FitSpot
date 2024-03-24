@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs, doc, addDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, addDoc, setDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove, FieldValue } from "firebase/firestore";
 import { database } from "./firebase-config";
 import { Class } from "../stores/useClassStore";
 
@@ -55,6 +55,39 @@ export const removeClass = async(id: string): Promise<string> => {
         await deleteDoc(doc(database, 'classes', id))
         return id
     } catch (error) {
+        const er = error as Error
+        return er.message
+    }
+}
+
+export const addUserToClass = async(uid: string, cid: string, arr: string): Promise<string> => {
+    try{
+        const classRef = doc(database, 'classes', cid)
+        if(arr === 'register'){
+            await updateDoc(classRef, {
+                participants: arrayUnion(uid)
+            })
+        } else{
+            await updateDoc(classRef, {
+                waitingList: arrayUnion(uid)
+            })
+        }
+
+        return cid;
+    }catch (error){
+        const er = error as Error
+        return er.message
+    }
+}
+
+export const removeUserFromClass = async(uid: string, cid: string, arr: FieldValue): Promise<string> => {
+    try{
+        const classRef = doc(database, 'classes', cid)
+        await updateDoc(classRef, {
+            arr: arrayRemove(uid)
+        })
+        return cid;
+    }catch (error){
         const er = error as Error
         return er.message
     }

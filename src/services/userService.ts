@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
+import { FieldValue, arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { auth, database } from "./firebase-config";
 import { User } from "../stores/useUserStore";
 
@@ -13,4 +13,48 @@ export const fetchUser = async(): Promise<User> => {
         return data
     })
     return userList[0]
+}
+
+export const addClasstoUser = async(uid: string, cid: string): Promise<string> => {
+    try {
+        const q = query(collection(database, 'accounts'), where('uid', '==', uid));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+
+            await updateDoc(userDoc.ref, {
+                myClasses: arrayUnion(cid)
+            });
+
+            return uid;
+        } else {
+            throw new Error('User not found');
+        }
+    } catch (error) {
+        const er = error as Error;
+        return er.message;
+    }
+}
+
+export const removeClassFromUser = async(uid: string, cid: string): Promise<string> => {
+    try {
+        const q = query(collection(database, 'accounts'), where('uid', '==', uid));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+
+            await updateDoc(userDoc.ref, {
+                myClasses: arrayRemove(cid)
+            });
+
+            return uid;
+        } else {
+            throw new Error('User not found');
+        }
+    } catch (error) {
+        const er = error as Error;
+        return er.message;
+    }
 }
