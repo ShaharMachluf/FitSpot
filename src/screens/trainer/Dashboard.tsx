@@ -17,7 +17,7 @@ const Dashboard = () => {
     <>
     <View style={style.container}>
       <ScheduleComponent mode='trainer'/>
-        <AddClassComponent />
+      <AddClassComponent />
     </View>
     </>
 
@@ -26,7 +26,7 @@ const Dashboard = () => {
 
 export const screenOptions = () => {
   return {
-      headerTitle: 'Dashboard',
+      headerTitle: 'Trainer',
       headerRight: () => (
           <MaterialIcons 
               onPress={handleSignOut}

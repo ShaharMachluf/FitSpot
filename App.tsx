@@ -8,7 +8,7 @@ import {
   Provider as PaperProvider,
 } from "react-native-paper";
 import colors from "./src/services/colors";
-import { AuthStack, TrainersDahcboardStack } from "./src/navigation/Navigation";
+import { AppTabs, AuthStack, TrainersDahcboardStack } from "./src/navigation/Navigation";
 import style from "./src/services/style";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./src/services/firebase-config";
@@ -106,7 +106,7 @@ export default function App() {
                 isTrainer ? (
                   <TrainersDahcboardStack />
                 ) : (
-                  <TraineesDashboard />
+                  <AppTabs/>
                 )
               ) : (
                 <View style={style.container}>
