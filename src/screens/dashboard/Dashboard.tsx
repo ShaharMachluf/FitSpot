@@ -1,9 +1,11 @@
 import React from 'react'
-import { Button, Text } from 'react-native'
+import { Button, Text, Image, View } from 'react-native'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../services/firebase-config'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import colors from '../../services/colors'
+import style from '../../services/style'
+import LogoComponent from '../../components/LogoComponent'
 
 const handleSignOut = async() => {
   await auth.signOut()
@@ -13,7 +15,14 @@ const Dashboard = () => {
 
   return (
     <>
-    <Text>Trainee's Dashboard</Text>
+    {/* <View style={style.container}> */}
+          <Image source={require('../../../assets/images/background2_1_20.jpg')} style={{marginLeft: -25}}/>
+    <View style={style.img_view}>
+      <LogoComponent />
+    </View>
+    {/* </View> */}
+
+    
     </>
 
   )

@@ -143,4 +143,13 @@ export default StyleSheet.create({
         color: colors.dark_tin,
         fontSize: 17
       },
+      img_view: {
+        position: 'absolute',
+        zIndex: 1,
+        justifyContent: 'center',
+        top: 0,
+        left: 0,
+        right: 0,
+        marginTop: 5
+      }
 })
