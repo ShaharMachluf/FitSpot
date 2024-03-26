@@ -6,12 +6,11 @@ import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { useMutation } from "react-query";
-import { addUserToClass, removeClass } from "../services/classService";
+import { addUserToClass, removeClass, removeUserFromClass } from "../services/classService";
 import UpdateClassComponent from "./UpdateClassComponent";
 import { useUser } from "../stores/useUserStore";
-import { addClasstoUser } from "../services/userService";
+import { addClasstoUser, removeClassFromUser } from "../services/userService";
 import { auth } from "../services/firebase-config";
-import { FieldValue } from "firebase/firestore";
 
 interface Props {
   c: Class;
@@ -26,9 +25,12 @@ const ClassItem = ({ c, mode }: Props) => {
 
   const currUser = useUser((state) => state.user);
   const useAddToClass = useUser((state) => state.addToClass)
+  const useRemoveFromClass = useUser((state) => state.removeFromClass)
 
   const useAddUserToClass = useClass((state) => state.addUserToClass)
   const useAddUserToWaiting = useClass((state) => state.addUserToWaiting)
+  const useRemoveUserFromClass = useClass((state) => state.removeUserFromClass)
+  const useRemoveUserFromWaiting = useClass((state) => state.removeUserFromWaiting)
 
   useEffect(() => {
     if(c.participants.length === c.maxParticipants){
@@ -66,7 +68,7 @@ const ClassItem = ({ c, mode }: Props) => {
           useAddUserToClass(uid, c.id)
           setIsRegistered(true)
         } else{
-          await addUserToClass(auth.currentUser.uid, c.id, arr)
+          await addUserToClass(uid, c.id, arr)
           useAddUserToWaiting(uid, c.id)
           setIsWaiting(true)
         }
@@ -75,6 +77,38 @@ const ClassItem = ({ c, mode }: Props) => {
     } catch(error){
       const er = error as Error
       Alert.alert("error", er.message)
+      setIsLoading(false)
+    }
+  }
+
+  const handleRemove = async(arr: string) => {
+    setIsLoading(true)
+    try{
+      if(auth.currentUser){
+        const uid = auth.currentUser.uid;
+        if(arr === "register"){
+          await removeUserFromClass(uid, c.id, arr)
+          await removeClassFromUser(uid, c.id)
+          useRemoveFromClass(c.id)
+          useRemoveUserFromClass(uid, c.id)
+          if(c.waitingList.length > 0){
+            const waitingId = c.waitingList[0]
+            await removeUserFromClass(waitingId, c.id, 'waiting')
+            await addUserToClass(waitingId, c.id, 'register')
+            await addClasstoUser(waitingId, c.id)
+          }
+          setIsRegistered(false)
+        } else {
+          await removeUserFromClass(uid, c.id, arr)
+          useRemoveUserFromWaiting(uid, c.id)
+          setIsWaiting(false)
+        }
+        setIsLoading(false)
+      }
+    } catch(error){
+      const er = error as Error
+      Alert.alert("error", er.message)
+      setIsLoading(false)
     }
   }
 
@@ -134,14 +168,14 @@ const ClassItem = ({ c, mode }: Props) => {
             <>
           {
             isRegistered ? (
-              <TouchableOpacity style={style.class_item_btn_container}>
+              <TouchableOpacity style={style.class_item_btn_container} onPress={() => handleRemove('register')}>
               <Text style={style.update_txt}>Cancle registration</Text>
             </TouchableOpacity>
             ) : (
               <>
               {
                 isWaiting ? (
-                  <TouchableOpacity style={style.class_item_btn_container}>
+                  <TouchableOpacity style={style.class_item_btn_container} onPress={() => handleRemove('waiting')}>
                     <Text style={style.update_txt}>Cancle waiting</Text>
                   </TouchableOpacity>
                 ) : (

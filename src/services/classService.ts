@@ -80,12 +80,18 @@ export const addUserToClass = async(uid: string, cid: string, arr: string): Prom
     }
 }
 
-export const removeUserFromClass = async(uid: string, cid: string, arr: FieldValue): Promise<string> => {
+export const removeUserFromClass = async(uid: string, cid: string, arr: string): Promise<string> => {
     try{
         const classRef = doc(database, 'classes', cid)
-        await updateDoc(classRef, {
-            arr: arrayRemove(uid)
-        })
+        if(arr === 'register'){
+            await updateDoc(classRef, {
+                participants: arrayRemove(uid)
+            })
+        } else{
+            await updateDoc(classRef, {
+                waitingList: arrayRemove(uid)
+            })
+        }
         return cid;
     }catch (error){
         const er = error as Error

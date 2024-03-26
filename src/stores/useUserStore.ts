@@ -1,3 +1,4 @@
+import { memoryLocalCache } from "firebase/firestore";
 import { create } from "zustand";
 
 export interface User{
@@ -14,6 +15,7 @@ interface userStore{
     user: User | null;
     setUser: (user: User) => void;
     addToClass: (cid: string) => void;
+    removeFromClass: (cid: string) => void;
 }
 
 export const useUser = create<userStore>((set) => ({
@@ -31,5 +33,16 @@ export const useUser = create<userStore>((set) => ({
             }
         }
         return state;
+    }),
+    removeFromClass: (cid) => set((state) => {
+        if(state.user){
+            return {
+                user: {
+                    ...state.user,
+                    myClasses: state.user.myClasses.filter((c) => c !== cid)
+                }
+            }
+        }
+        return state
     })
 }))
