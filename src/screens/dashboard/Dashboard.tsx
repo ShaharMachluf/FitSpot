@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, Text, Image, View } from 'react-native'
-import { signOut } from 'firebase/auth'
+import { Text, Image, View, ScrollView } from 'react-native'
 import { auth } from '../../services/firebase-config'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import colors from '../../services/colors'
 import style from '../../services/style'
 import LogoComponent from '../../components/LogoComponent'
+import MyClassesComponent from '../../components/MyClassesComponent'
 
 const handleSignOut = async() => {
   await auth.signOut()
@@ -15,13 +15,14 @@ const Dashboard = () => {
 
   return (
     <>
-    {/* <View style={style.container}> */}
-          <Image source={require('../../../assets/images/background2_1_20.jpg')} style={{marginLeft: -25}}/>
+    <Image source={require('../../../assets/images/background2_1_20.jpg')} style={{marginLeft: -25}}/>
     <View style={style.img_view}>
       <LogoComponent />
     </View>
-    {/* </View> */}
-
+    <View style={[style.container]}>
+      <Text style={style.upcoming_title}>Your upcoming classes:</Text>
+      <MyClassesComponent />
+    </View>
     
     </>
 

@@ -6,13 +6,9 @@ import { Class } from "../stores/useClassStore";
 const classRef = collection(database, 'classes')
 
 export const fetchClass = async (id: string): Promise<Class | Error> => {
-    try {
-        const docRef = doc(database, 'classes', id);
-        const docSnap = await getDoc(docRef);
-        return docSnap.data() as Class;
-    } catch(error){
-        return error as Error;
-    }
+    const docRef = doc(database, 'classes', id);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data() as Class;
 }
 
 export const fetchAllClasses = async(): Promise<Class[] | Error> => {

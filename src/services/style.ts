@@ -151,5 +151,11 @@ export default StyleSheet.create({
         left: 0,
         right: 0,
         marginTop: 5
+      },
+      upcoming_title: {
+        fontFamily: "RobotoCondensed-Bold",
+        marginTop: 40,
+        marginLeft: 5,
+        fontSize: 20
       }
 })
