@@ -11,12 +11,10 @@ const MyClassesComponent = () => {
     const [myClasses, setMyClasses] = useState<Class[]>([])
 
     useEffect(() => {
-        const getClasses = () => {
-            if(currUser)
-                setMyClasses(classes.filter(c => c.participants.includes(currUser.uid)))
+        if (currUser && classes.length > 0) {
+            setMyClasses(classes.filter(c => c.participants.includes(currUser.uid)));
         }
-        getClasses()
-    }, [classes])
+    }, [currUser, classes])
 
     const getClassesByDate = (): Class[] => {
         const today = new Date();
