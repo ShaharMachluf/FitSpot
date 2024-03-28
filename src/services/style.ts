@@ -165,5 +165,12 @@ export default StyleSheet.create({
       upcoming_container: {
         backgroundColor: colors.light_tin, 
         flex:1
+      },
+      profile_container:{
+        flex: 1,
+        backgroundColor: colors.light_tin,
+        alignItems: 'center',
+        paddingVertical: 20,
+        justifyContent: 'space-between'
       }
 })
