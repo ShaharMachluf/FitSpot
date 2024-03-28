@@ -143,7 +143,7 @@ export default StyleSheet.create({
         color: colors.dark_tin,
         fontSize: 17
       },
-      img_view: {
+      logo_view: {
         position: 'absolute',
         zIndex: 1,
         justifyContent: 'center',
@@ -154,8 +154,16 @@ export default StyleSheet.create({
       },
       upcoming_title: {
         fontFamily: "RobotoCondensed-Bold",
-        marginTop: 40,
         marginLeft: 5,
-        fontSize: 20
+        fontSize: 20,
+        marginVertical: 10, // Adjust as needed
+      },
+      dashboard_container: {
+        position: 'relative',
+        flex: 1
+      },
+      upcoming_container: {
+        backgroundColor: colors.light_tin, 
+        flex:1
       }
 })

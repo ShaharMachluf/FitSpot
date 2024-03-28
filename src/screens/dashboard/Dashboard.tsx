@@ -14,18 +14,16 @@ const handleSignOut = async() => {
 const Dashboard = () => {
 
   return (
-    <>
-    <Image source={require('../../../assets/images/background2_1_20.jpg')} style={{marginLeft: -25}}/>
-    <View style={style.img_view}>
-      <LogoComponent />
-    </View>
-    <View style={[style.container]}>
-      <Text style={style.upcoming_title}>Your upcoming classes:</Text>
-      <MyClassesComponent />
-    </View>
-    
-    </>
-
+<View style={style.dashboard_container}>
+  <Image source={require('../../../assets/images/background2_1_20.jpg')} style={{marginLeft: -25}}/>
+  <View style={style.logo_view}>
+    <LogoComponent />
+  </View>
+  <View style={style.upcoming_container}>
+    <Text style={style.upcoming_title}>Your upcoming classes:</Text>
+    <MyClassesComponent />
+  </View>
+</View>
   )
 }
 

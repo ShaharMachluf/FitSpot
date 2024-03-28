@@ -27,6 +27,7 @@ const ClassItem = ({ c, mode }: Props) => {
   const useAddToClass = useUser((state) => state.addToClass)
   const useRemoveFromClass = useUser((state) => state.removeFromClass)
 
+  const classes = useClass((state) => state.classes)
   const useAddUserToClass = useClass((state) => state.addUserToClass)
   const useAddUserToWaiting = useClass((state) => state.addUserToWaiting)
   const useRemoveUserFromClass = useClass((state) => state.removeUserFromClass)
@@ -42,7 +43,7 @@ const ClassItem = ({ c, mode }: Props) => {
     else if(currUser && c.waitingList.includes(currUser.uid)){
       setIsWaiting(true)
     }
-  }, [])
+  }, [classes])
 
   const deleteClassMutation = useMutation(() => removeClass(c.id), {
     onSuccess: () => {
@@ -94,6 +95,7 @@ const ClassItem = ({ c, mode }: Props) => {
           if(c.waitingList.length > 0){
             const waitingId = c.waitingList[0]
             await removeUserFromClass(waitingId, c.id, 'waiting')
+            useRemoveUserFromWaiting(waitingId, c.id)
             await addUserToClass(waitingId, c.id, 'register')
             await addClasstoUser(waitingId, c.id)
           }

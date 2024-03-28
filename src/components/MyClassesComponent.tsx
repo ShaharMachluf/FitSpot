@@ -11,16 +11,29 @@ const MyClassesComponent = () => {
     const [myClasses, setMyClasses] = useState<Class[]>([])
 
     useEffect(() => {
-        const getClasses = async() => {
+        const getClasses = () => {
             if(currUser)
                 setMyClasses(classes.filter(c => c.participants.includes(currUser.uid)))
         }
         getClasses()
-    }, [])
+    }, [classes])
+
+    const getClassesByDate = (): Class[] => {
+        const today = new Date();
+        return myClasses.filter((c) => {
+            const classDate = new Date(c.date.split('/').reverse().join('-'));
+            return classDate >= today;
+        }).sort((a, b) => {
+          const dateA = new Date(`1970-01-01T${a.start}`);
+          const dateB = new Date(`1970-01-01T${b.start}`);
+          return dateA.getTime() - dateB.getTime();
+        });
+      }
+
   return (
-    <View>
+    <View style={{height: 260}}>
         <FlatList
-            data={myClasses}
+            data={getClassesByDate()}
             renderItem={({ item }) => <ClassItem c={item} mode={"trainee"}/>}
             ListEmptyComponent={
             <View style={{alignItems: 'center'}}>
