@@ -156,7 +156,7 @@ export default StyleSheet.create({
         fontFamily: "RobotoCondensed-Bold",
         marginLeft: 5,
         fontSize: 20,
-        marginVertical: 10, // Adjust as needed
+        marginVertical: 10, 
       },
       dashboard_container: {
         position: 'relative',
@@ -171,6 +171,7 @@ export default StyleSheet.create({
         backgroundColor: colors.light_tin,
         alignItems: 'center',
         paddingVertical: 20,
-        justifyContent: 'space-between'
+        // paddingHorizontal: 10
+        // justifyContent: 'space-between'
       }
 })

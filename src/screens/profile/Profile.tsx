@@ -7,6 +7,7 @@ import { useUser } from '../../stores/useUserStore'
 import style from '../../services/style'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import UpdateUserComponent from '../../components/UpdateUserComponent'
 
 const handleSignOut = async() => {
     await auth.signOut()
@@ -18,7 +19,7 @@ const Profile = () => {
 
   return (
     <View style={style.profile_container}>
-      <View>
+    <>
         <Text style={[style.upcoming_title, {fontSize: 30}]}>{currUser?.firstName} {currUser?.lastName}</Text>
         <View style={style.checkBoxContainer}>
           <MaterialCommunityIcons name='email-outline' size={20} />
@@ -28,12 +29,8 @@ const Profile = () => {
           <SimpleLineIcons name='phone' size={20}/>
           <Text style={style.checkBoxTxt}>  {currUser?.mobile}</Text>
         </View>
-      </View>
-      <View style={{width: '100%', padding: 0, marginBottom: -20}}>
-        <TouchableOpacity style={[style.btn, style.add_class_btn, {width: '100%'}]}>
-          <Text>Edit</Text>
-        </TouchableOpacity>
-      </View>
+      <UpdateUserComponent />
+    </>
     </View>
   )
 }

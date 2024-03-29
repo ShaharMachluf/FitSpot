@@ -1,4 +1,4 @@
-import { FieldValue, arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { FieldValue, arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { auth, database } from "./firebase-config";
 import { User } from "../stores/useUserStore";
 
@@ -13,6 +13,24 @@ export const fetchUser = async(): Promise<User> => {
         return data
     })
     return userList[0]
+}
+
+export const updateUser = async(user: User): Promise<User | string> => {
+    const q = query(userRef, where('uid', "==", user.uid));
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            const docRef = userDoc.ref;
+            await setDoc(docRef, user); 
+            
+        };
+        return user;
+    } catch (error) {
+        const er = error as Error
+        return er.message
+    }
 }
 
 export const addClasstoUser = async(uid: string, cid: string): Promise<string> => {
