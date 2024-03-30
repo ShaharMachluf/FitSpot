@@ -171,7 +171,5 @@ export default StyleSheet.create({
         backgroundColor: colors.light_tin,
         alignItems: 'center',
         paddingVertical: 20,
-        // paddingHorizontal: 10
-        // justifyContent: 'space-between'
       }
 })

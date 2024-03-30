@@ -29,7 +29,7 @@ const MyClassesComponent = () => {
       }
 
   return (
-    <View style={{height: 260}}>
+    <View style={{height: '80%'}}>
         <FlatList
             data={getClassesByDate()}
             renderItem={({ item }) => <ClassItem c={item} mode={"trainee"}/>}

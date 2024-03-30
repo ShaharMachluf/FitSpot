@@ -44,7 +44,7 @@ const ClassItem = ({ c, mode }: Props) => {
     else if(currUser && c.waitingList.includes(currUser.uid)){
       setIsWaiting(true)
     }
-  }, [classes])
+  }, [classes, c.participants])
 
   const deleteClassMutation = useMutation(() => removeClass(c.id), {
     onSuccess: () => {
@@ -99,6 +99,7 @@ const ClassItem = ({ c, mode }: Props) => {
             useRemoveUserFromWaiting(waitingId, c.id)
             await addUserToClass(waitingId, c.id, 'register')
             await addClasstoUser(waitingId, c.id)
+            useAddUserToClass(waitingId, c.id)
           }
           setIsRegistered(false)
         } else {

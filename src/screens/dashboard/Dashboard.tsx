@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   return (
 <View style={style.dashboard_container}>
-  <Image source={require('../../../assets/images/background2_1_20.jpg')} style={{marginLeft: -25}}/>
+  <Image source={require('../../../assets/images/background2_1_20.jpg')} />
   <View style={style.logo_view}>
     <LogoComponent />
   </View>
