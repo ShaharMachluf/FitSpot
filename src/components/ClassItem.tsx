@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Class, useClass } from "../stores/useClassStore";
-import { View, Text, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert, Platform } from "react-native";
 import style from "../services/style";
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -11,6 +11,7 @@ import UpdateClassComponent from "./UpdateClassComponent";
 import { useUser } from "../stores/useUserStore";
 import { addClasstoUser, removeClassFromUser } from "../services/userService";
 import { auth } from "../services/firebase-config";
+import * as Calendar from 'expo-calendar';
 
 interface Props {
   c: Class;
@@ -114,6 +115,52 @@ const ClassItem = ({ c, mode }: Props) => {
     }
   }
 
+const getDefaultCalendarSource = async() => {
+  const defaultCalendar = await Calendar.getDefaultCalendarAsync();  
+  return defaultCalendar.source;
+}
+
+  const addClassToCalendar = async() => {
+
+    const { status } = await Calendar.requestCalendarPermissionsAsync();
+    if (status === 'granted') {
+      const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+    
+
+    const defaultCalendarSource =
+    Platform.OS === 'ios'
+        ? await getDefaultCalendarSource()
+        : calendars[0].source;
+
+        if (!defaultCalendarSource) {
+          alert('No default calendar found');          
+          return;
+      }
+      
+      const newCalendarID = await Calendar.createCalendarAsync({
+        title: 'Expo Calendar',
+        color: 'blue',
+        entityType: Calendar.EntityTypes.EVENT,
+        sourceId: defaultCalendarSource.id,
+        source: defaultCalendarSource,
+        name: 'internalCalendarName',
+        ownerAccount: 'personal',
+        accessLevel: Calendar.CalendarAccessLevel.OWNER,
+      });
+      
+
+      const newEvent = {
+          title: c.name,
+          startDate: new Date(`${c.date.split('/').reverse().join('-')}T${c.start}`),
+          endDate: new Date(`${c.date.split('/').reverse().join('-')}T${c.end}`),
+          timeZone: 'local',
+      };
+
+      const eventId = await Calendar.createEventAsync(newCalendarID, newEvent);
+      alert('Event added to your calendar');
+      }
+  }
+
   return (
     <View style={style.class_item}>
       {mode === "trainer" ? (
@@ -140,7 +187,7 @@ const ClassItem = ({ c, mode }: Props) => {
               <Text style={style.hours}>
                 {c.start} - {c.end} | {c.date}
               </Text>
-              <MaterialCommunityIcons name="calendar-plus" size={20} color="#bcbcbc"/>
+              <MaterialCommunityIcons name="calendar-plus" size={20} color="#bcbcbc" onPress={addClassToCalendar}/>
             </View>
             ) : (
               <Text style={style.hours}>
