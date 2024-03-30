@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, View } from "react-native";
+import { ActivityIndicator, Alert, View, LogBox } from "react-native";
 import { useFonts } from "expo-font";
 import { useCallback, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -12,8 +12,6 @@ import { AppTabs, AuthStack, TrainersDahcboardStack } from "./src/navigation/Nav
 import style from "./src/services/style";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./src/services/firebase-config";
-import TraineesDashboard from "./src/screens/dashboard/Dashboard";
-import TrainersDashboard from "./src/screens/trainer/Dashboard";
 import { useUser } from "./src/stores/useUserStore";
 import { fetchUser } from "./src/services/userService";
 import { useClass } from "./src/stores/useClassStore";
@@ -27,6 +25,8 @@ const theme = {
     secondaryContainer: colors.dark_tin,
   },
 };
+
+LogBox.ignoreAllLogs()
 
 const queryClient = new QueryClient();
 

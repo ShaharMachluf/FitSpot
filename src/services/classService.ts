@@ -1,6 +1,7 @@
 import { collection, getDoc, getDocs, doc, addDoc, setDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove, FieldValue } from "firebase/firestore";
 import { database } from "./firebase-config";
 import { Class } from "../stores/useClassStore";
+import { removeClassFromUser } from "./userService";
 
 
 const classRef = collection(database, 'classes')
@@ -48,6 +49,13 @@ export const updateClass = async(c: Class): Promise<Class | string> => {
 
 export const removeClass = async(id: string): Promise<string> => {
     try {
+        const c = await fetchClass(id)
+        if('participants' in c){
+            c.participants.forEach(uid => {
+                removeClassFromUser(uid, c.id)
+            });
+        }
+
         await deleteDoc(doc(database, 'classes', id))
         return id
     } catch (error) {

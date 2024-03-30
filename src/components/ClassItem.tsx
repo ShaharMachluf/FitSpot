@@ -119,7 +119,7 @@ const ClassItem = ({ c, mode }: Props) => {
       {mode === "trainer" ? (
         <View style={[style.time_container, { marginBottom: 0 }]}>
           <Text style={style.hours}>
-            {c.start} - {c.end}
+            {c.start} - {c.end} | {c.date}
           </Text>
           {isLoading ? (
             <ActivityIndicator />
@@ -138,13 +138,13 @@ const ClassItem = ({ c, mode }: Props) => {
             isRegistered ? (
               <View style={[style.time_container, { marginBottom: 0 }]}>
               <Text style={style.hours}>
-                {c.start} - {c.end}
+                {c.start} - {c.end} | {c.date}
               </Text>
               <MaterialCommunityIcons name="calendar-plus" size={20} color="#bcbcbc"/>
             </View>
             ) : (
               <Text style={style.hours}>
-                {c.start} - {c.end}
+                {c.start} - {c.end} | {c.date}
               </Text>
             )
           }

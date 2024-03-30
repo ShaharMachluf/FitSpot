@@ -22,8 +22,8 @@ const MyClassesComponent = () => {
             const classDate = new Date(c.date.split('/').reverse().join('-'));
             return classDate >= today;
         }).sort((a, b) => {
-          const dateA = new Date(`1970-01-01T${a.start}`);
-          const dateB = new Date(`1970-01-01T${b.start}`);
+          const dateA = new Date(`${a.date.split('/').reverse().join('-')}T${a.start}`);
+          const dateB = new Date(`${b.date.split('/').reverse().join('-')}T${b.start}`);
           return dateA.getTime() - dateB.getTime();
         });
       }
