@@ -4,6 +4,10 @@ FitSpot is a cross-platform fitness class scheduling and management app built wi
 
 ## Features
 
+<table>
+<tr>
+<td>
+
 ### For Trainees (Regular Users)
 - **Sign Up & Login:** Register or log in as a trainee.
 - **Dashboard:** View upcoming classes you are enrolled in.
@@ -16,6 +20,14 @@ FitSpot is a cross-platform fitness class scheduling and management app built wi
   - View a calendar of all scheduled classes.
   - Add new classes with details such as name, date, time, and participant limits.
 - **Class Management:** Set minimum and maximum participants, and manage class rosters.
+
+</td>
+<td>
+  <img src="https://github.com/user-attachments/assets/30986738-a663-48c2-8698-2f00f356dd21" alt="FitSpot Screenshot" width="250"/>
+</td>
+</tr>
+</table>
+
 
 ## Main Screens
 
